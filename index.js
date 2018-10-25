@@ -29,9 +29,10 @@ const server = http.createServer((req, res) => {
     parseBodyJson(req, (err, payload) => {
         const handler = getHandler(req.url);
         handler(req, res, payload, (err, result) => {
+             res.setHeader('Content-Type', 'application/json');
             if (err) {
                 res.statusCode = err.code;
-                res.setHeader('Content-Type', 'application/json');
+               
                 res.end( JSON.stringify(err) );
             }
             helper.updateArticles();
